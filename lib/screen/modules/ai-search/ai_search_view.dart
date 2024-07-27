@@ -102,33 +102,38 @@ class AiSearchView extends GetView<AiSearchController> {
   }
 
   Widget aiSearchView() {
-    return ListView.builder(
-      shrinkWrap: true,
-      controller: controller.scrollController,
-      itemCount: controller.chats.length,
-      itemBuilder: (context, index) {
-        final chat = controller.chats[index];
-        if (chat.fromUser == true) {
-          return AutoScrollTag(
-            key: ValueKey(index),
-            controller: controller.scrollController,
-            index: index,
-            child: Container(
-                alignment: Alignment.centerRight,
-                child: MessageView.mine(chat.message)),
-          );
-        } else {
-          return AutoScrollTag(
-            key: ValueKey(index),
-            controller: controller.scrollController,
-            index: index,
-            child: Container(
-                key: controller.chatKeys[index],
-                alignment: Alignment.centerLeft,
-                child: MessageView.ai(chat.message)),
-          );
-        }
-      },
+    return Container(
+      constraints: BoxConstraints(
+        maxHeight: 500.w
+      ),
+      child: ListView.builder(
+        shrinkWrap: true,
+        controller: controller.scrollController,
+        itemCount: controller.chats.length,
+        itemBuilder: (context, index) {
+          final chat = controller.chats[index];
+          if (chat.fromUser == true) {
+            return AutoScrollTag(
+              key: ValueKey(index),
+              controller: controller.scrollController,
+              index: index,
+              child: Container(
+                  alignment: Alignment.centerRight,
+                  child: MessageView.mine(chat.message)),
+            );
+          } else {
+            return AutoScrollTag(
+              key: ValueKey(index),
+              controller: controller.scrollController,
+              index: index,
+              child: Container(
+                  key: controller.chatKeys[index],
+                  alignment: Alignment.centerLeft,
+                  child: MessageView.ai(chat.message)),
+            );
+          }
+        },
+      ),
     );
   }
 }
